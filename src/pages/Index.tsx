@@ -40,7 +40,7 @@ const Index = () => {
             </Button>
             
             <Button
-              variant="primary"
+              variant="default"
               leftIcon={<Plus size={16} />}
               onClick={() => setUploadModalOpen(true)}
             >
@@ -137,7 +137,7 @@ const Index = () => {
                     Cancel
                   </Button>
                   <Button
-                    variant="primary"
+                    variant="default"
                     leftIcon={<ArrowUpCircle size={16} />}
                     onClick={() => {
                       toast.info("Please select files to upload first");

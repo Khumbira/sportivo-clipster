@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Menu, Bell, User, ChevronDown } from 'lucide-react';
+import { Menu, User, ChevronDown } from 'lucide-react';
 import SearchBar from '../common/SearchBar';
+import NotificationDropdown from '../notifications/NotificationDropdown';
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -29,10 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
       </div>
       
       <div className="flex items-center space-x-4">
-        <button className="relative p-2 rounded-full hover:bg-secondary transition-colors">
-          <Bell size={20} />
-          <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-primary"></span>
-        </button>
+        <NotificationDropdown />
         
         <div className="flex items-center">
           <button className="flex items-center space-x-2 p-1.5 rounded-full hover:bg-secondary transition-colors">

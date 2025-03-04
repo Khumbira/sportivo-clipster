@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
@@ -112,7 +111,7 @@ const VideoDetail = () => {
                   Share
                 </Button>
                 <Button 
-                  variant="primary" 
+                  variant="default" 
                   leftIcon={<Download size={16} />}
                   onClick={handleDownload}
                 >
