@@ -4,6 +4,7 @@ import { formatDuration, formatRelativeTime } from '@/utils/mockData';
 import { Video } from '@/types';
 import Button from '../common/Button';
 import { MoreHorizontal, Play } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface RecentUploadsProps {
   videos: Video[];
@@ -29,7 +30,7 @@ const RecentUploads: React.FC<RecentUploadsProps> = ({ videos }) => {
               index !== videos.length - 1 ? 'border-b border-border' : ''
             } hover:bg-secondary/20 transition-colors`}
           >
-            <div className="relative w-32 h-18 rounded-md overflow-hidden flex-shrink-0 mr-4">
+            <Link to={`/video/${video.id}`} className="relative w-32 h-18 rounded-md overflow-hidden flex-shrink-0 mr-4">
               <img 
                 src={video.thumbnailUrl} 
                 alt={video.title} 
@@ -45,10 +46,12 @@ const RecentUploads: React.FC<RecentUploadsProps> = ({ videos }) => {
               <div className="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded">
                 {formatDuration(video.duration)}
               </div>
-            </div>
+            </Link>
             
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-sm text-foreground truncate">{video.title}</h3>
+              <Link to={`/video/${video.id}`} className="hover:text-primary transition-colors">
+                <h3 className="font-medium text-sm text-foreground truncate">{video.title}</h3>
+              </Link>
               <div className="flex items-center mt-1 text-xs text-muted-foreground">
                 <span>{formatRelativeTime(video.createdAt)}</span>
                 <span className="mx-1.5">•</span>

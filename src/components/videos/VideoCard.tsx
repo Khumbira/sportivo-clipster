@@ -4,6 +4,7 @@ import { Video } from '@/types';
 import { formatDuration, formatBytes, formatRelativeTime } from '@/utils/mockData';
 import { Play, MoreVertical } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 interface VideoCardProps {
   video: Video;
@@ -18,28 +19,32 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, className }) => {
         className
       )}
     >
-      <div className="aspect-video relative overflow-hidden bg-secondary/30">
-        <img 
-          src={video.thumbnailUrl} 
-          alt={video.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <button className="w-12 h-12 rounded-full bg-white/80 text-primary flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300 hover:bg-white">
-              <Play size={24} className="ml-0.5" />
-            </button>
+      <Link to={`/video/${video.id}`} className="block">
+        <div className="aspect-video relative overflow-hidden bg-secondary/30">
+          <img 
+            src={video.thumbnailUrl} 
+            alt={video.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <button className="w-12 h-12 rounded-full bg-white/80 text-primary flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300 hover:bg-white">
+                <Play size={24} className="ml-0.5" />
+              </button>
+            </div>
+          </div>
+          <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded">
+            {formatDuration(video.duration)}
           </div>
         </div>
-        <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded">
-          {formatDuration(video.duration)}
-        </div>
-      </div>
+      </Link>
       
       <div className="p-4">
         <div className="flex justify-between items-start">
-          <h3 className="font-medium text-base line-clamp-1">{video.title}</h3>
+          <Link to={`/video/${video.id}`} className="hover:text-primary transition-colors">
+            <h3 className="font-medium text-base line-clamp-1">{video.title}</h3>
+          </Link>
           <button className="p-1 rounded-full hover:bg-secondary/80 -mt-1 -mr-1">
             <MoreVertical size={16} className="text-muted-foreground" />
           </button>
