@@ -17,7 +17,7 @@ export interface StatData {
   label: string;
   value: string | number;
   change?: number; // percentage change
-  icon: React.ReactNode;
+  icon: string; // Changed from React.ReactNode to string identifier
 }
 
 export interface Category {

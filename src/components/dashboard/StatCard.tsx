@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowUp, ArrowDown } from 'lucide-react';
+import { ArrowUp, ArrowDown, Film, Upload, Download, Tag } from 'lucide-react';
 import { StatData } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -14,6 +14,22 @@ const StatCard: React.FC<StatCardProps> = ({ stat, className }) => {
   
   const isPositive = change && change > 0;
   const isNegative = change && change < 0;
+  
+  // Render icon based on string identifier
+  const renderIcon = () => {
+    switch (icon) {
+      case 'Film':
+        return <Film size={20} />;
+      case 'Upload':
+        return <Upload size={20} />;
+      case 'Download':
+        return <Download size={20} />;
+      case 'Tag':
+        return <Tag size={20} />;
+      default:
+        return null;
+    }
+  };
   
   return (
     <div className={cn(
@@ -43,7 +59,7 @@ const StatCard: React.FC<StatCardProps> = ({ stat, className }) => {
         </div>
         
         <div className="p-2 rounded-full bg-primary/10 text-primary">
-          {icon}
+          {renderIcon()}
         </div>
       </div>
     </div>

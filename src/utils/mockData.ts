@@ -1,6 +1,4 @@
-
 import { Video, StatData, Category, Tag } from '../types';
-import { Film, Upload, Download, Tag as TagIcon } from 'lucide-react';
 
 // Helper to format date to be X days ago
 const daysAgo = (days: number): Date => {
@@ -97,25 +95,25 @@ export const mockStats: StatData[] = [
     label: 'Total Videos',
     value: 342,
     change: 12,
-    icon: <Film size={20} />
+    icon: 'Film'
   },
   {
     label: 'Uploads This Month',
     value: 78,
     change: 24,
-    icon: <Upload size={20} />
+    icon: 'Upload'
   },
   {
     label: 'Downloads',
     value: 1253,
     change: -5,
-    icon: <Download size={20} />
+    icon: 'Download'
   },
   {
     label: 'Total Tags',
     value: 127,
     change: 8,
-    icon: <TagIcon size={20} />
+    icon: 'Tag'
   }
 ];
 
