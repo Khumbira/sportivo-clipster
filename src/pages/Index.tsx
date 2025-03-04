@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import StatCard from '@/components/dashboard/StatCard';
@@ -7,8 +6,8 @@ import VideoGrid from '@/components/videos/VideoGrid';
 import UploadArea from '@/components/upload/UploadArea';
 import { mockStats, mockVideos } from '@/utils/mockData';
 import Button from '@/components/common/Button';
-import { Plus, Filter, ChevronDown, Grid, List, ArrowUpCircle } from 'lucide-react';
-import { toast } from "@/components/ui/sonner";
+import { Plus, Filter, ChevronDown, Grid, List, ArrowUpCircle, X } from 'lucide-react';
+import { toast } from "sonner";
 
 const Index = () => {
   const [view, setView] = useState<'grid' | 'list'>('grid');
