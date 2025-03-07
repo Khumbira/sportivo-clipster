@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
@@ -32,7 +33,7 @@ const VideoDetail = () => {
           <h1 className="text-2xl font-bold mb-2">Video Not Found</h1>
           <p className="text-muted-foreground mb-6">The video you're looking for doesn't exist or has been removed.</p>
           <Link to="/">
-            <Button variant="primary">Return to Dashboard</Button>
+            <Button variant="default">Return to Dashboard</Button>
           </Link>
         </div>
       </MainLayout>

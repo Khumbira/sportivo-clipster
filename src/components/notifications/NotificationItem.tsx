@@ -41,64 +41,110 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     }
   };
   
-  const Container = link ? Link : 'div';
-  const containerProps = link ? { to: link } : {};
-
-  return (
-    <Container
-      {...containerProps}
-      onClick={onClick}
-      className={cn(
-        "relative flex gap-3 p-3 transition-colors hover:bg-muted/50 rounded-md",
-        !read && "bg-muted/30",
-        compact ? "py-2" : ""
-      )}
-    >
-      {!read && (
-        <span className="absolute top-3 right-3 h-2 w-2 rounded-full bg-primary"></span>
-      )}
-      
-      <div className="flex-shrink-0 mt-0.5">
-        {getIcon()}
-      </div>
-      
-      <div className="flex-1 min-w-0">
-        <div className="flex justify-between items-start">
-          <h4 className={cn(
-            "font-medium text-foreground line-clamp-1", 
-            compact ? "text-sm" : "text-base"
+  const commonClassNames = cn(
+    "relative flex gap-3 p-3 transition-colors hover:bg-muted/50 rounded-md",
+    !read && "bg-muted/30",
+    compact ? "py-2" : ""
+  );
+  
+  // Render as Link if link property exists, otherwise as div
+  if (link) {
+    return (
+      <Link
+        to={link}
+        onClick={onClick}
+        className={commonClassNames}
+      >
+        {!read && (
+          <span className="absolute top-3 right-3 h-2 w-2 rounded-full bg-primary"></span>
+        )}
+        
+        <div className="flex-shrink-0 mt-0.5">
+          {getIcon()}
+        </div>
+        
+        <div className="flex-1 min-w-0">
+          <div className="flex justify-between items-start">
+            <h4 className={cn(
+              "font-medium text-foreground line-clamp-1", 
+              compact ? "text-sm" : "text-base"
+            )}>
+              {title}
+            </h4>
+            {!compact && (
+              <span className="text-xs text-muted-foreground ml-2 flex-shrink-0">
+                {formatNotificationTime(timestamp)}
+              </span>
+            )}
+          </div>
+          
+          <p className={cn(
+            "text-muted-foreground line-clamp-2", 
+            compact ? "text-xs" : "text-sm"
           )}>
-            {title}
-          </h4>
-          {!compact && (
-            <span className="text-xs text-muted-foreground ml-2 flex-shrink-0">
+            {message}
+          </p>
+          
+          {compact && (
+            <span className="text-xs text-muted-foreground mt-1">
+              {formatNotificationTime(timestamp)}
+            </span>
+          )}
+          
+          {link && !compact && (
+            <div className="flex items-center mt-1 text-xs text-primary">
+              <span>View details</span>
+              <ExternalLink className="ml-1 h-3 w-3" />
+            </div>
+          )}
+        </div>
+      </Link>
+    );
+  } else {
+    return (
+      <div
+        onClick={onClick}
+        className={commonClassNames}
+      >
+        {!read && (
+          <span className="absolute top-3 right-3 h-2 w-2 rounded-full bg-primary"></span>
+        )}
+        
+        <div className="flex-shrink-0 mt-0.5">
+          {getIcon()}
+        </div>
+        
+        <div className="flex-1 min-w-0">
+          <div className="flex justify-between items-start">
+            <h4 className={cn(
+              "font-medium text-foreground line-clamp-1", 
+              compact ? "text-sm" : "text-base"
+            )}>
+              {title}
+            </h4>
+            {!compact && (
+              <span className="text-xs text-muted-foreground ml-2 flex-shrink-0">
+                {formatNotificationTime(timestamp)}
+              </span>
+            )}
+          </div>
+          
+          <p className={cn(
+            "text-muted-foreground line-clamp-2", 
+            compact ? "text-xs" : "text-sm"
+          )}>
+            {message}
+          </p>
+          
+          {compact && (
+            <span className="text-xs text-muted-foreground mt-1">
               {formatNotificationTime(timestamp)}
             </span>
           )}
         </div>
-        
-        <p className={cn(
-          "text-muted-foreground line-clamp-2", 
-          compact ? "text-xs" : "text-sm"
-        )}>
-          {message}
-        </p>
-        
-        {compact && (
-          <span className="text-xs text-muted-foreground mt-1">
-            {formatNotificationTime(timestamp)}
-          </span>
-        )}
-        
-        {link && !compact && (
-          <div className="flex items-center mt-1 text-xs text-primary">
-            <span>View details</span>
-            <ExternalLink className="ml-1 h-3 w-3" />
-          </div>
-        )}
       </div>
-    </Container>
-  );
+    );
+  }
 };
 
 export default NotificationItem;
