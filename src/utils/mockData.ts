@@ -33,6 +33,38 @@ export const formatBytes = (bytes: number, decimals: number = 2): string => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
 
+export const formatRelativeTime = (date: Date): string => {
+  const now = new Date();
+  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+  
+  if (diffInSeconds < 60) {
+    return 'just now';
+  }
+  
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  if (diffInMinutes < 60) {
+    return `${diffInMinutes} minute${diffInMinutes === 1 ? '' : 's'} ago`;
+  }
+  
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  if (diffInHours < 24) {
+    return `${diffInHours} hour${diffInHours === 1 ? '' : 's'} ago`;
+  }
+  
+  const diffInDays = Math.floor(diffInHours / 24);
+  if (diffInDays < 30) {
+    return `${diffInDays} day${diffInDays === 1 ? '' : 's'} ago`;
+  }
+  
+  const diffInMonths = Math.floor(diffInDays / 30);
+  if (diffInMonths < 12) {
+    return `${diffInMonths} month${diffInMonths === 1 ? '' : 's'} ago`;
+  }
+  
+  const diffInYears = Math.floor(diffInMonths / 12);
+  return `${diffInYears} year${diffInYears === 1 ? '' : 's'} ago`;
+};
+
 export const mockVideos: Video[] = [
   {
     id: '1',
@@ -166,7 +198,7 @@ export const mockVideos: Video[] = [
   }
 ];
 
-export const mockStatsData: StatData[] = [
+export const mockStats: StatData[] = [
   { label: "Total Videos", value: 120, change: 5, icon: "upload" },
   { label: "Total Views", value: "2.5M", change: 12, icon: "eye" },
   { label: "Total Storage", value: "500 GB", change: 3, icon: "database" },
@@ -181,7 +213,7 @@ export const mockCategories: Category[] = [
   { id: '5', name: 'Presentations', count: 25 }
 ];
 
-export const mockTags = [
+export const mockTags: Tag[] = [
   { id: '1', name: 'Tutorial', count: 12 },
   { id: '2', name: 'Product Demo', count: 8 },
   { id: '3', name: 'Explainer', count: 5 },

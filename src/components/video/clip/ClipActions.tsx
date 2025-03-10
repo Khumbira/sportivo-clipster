@@ -42,15 +42,15 @@ const ClipActions: React.FC<ClipActionsProps> = ({
       </div>
       <div className="flex flex-wrap gap-2">
         <Button size="sm" variant="default" onClick={onDownload}>
-          <Download size={16} />
+          <Download size={16} className="mr-1.5" />
           <span>Download</span>
         </Button>
         <Button size="sm" variant="outline" onClick={onAddToLibrary}>
-          <Plus size={16} />
+          <Plus size={16} className="mr-1.5" />
           <span>Add to Library</span>
         </Button>
         <Button size="sm" variant="secondary" onClick={onPreview}>
-          <Play size={16} />
+          <Play size={16} className="mr-1.5" />
           <span>Preview</span>
         </Button>
       </div>
