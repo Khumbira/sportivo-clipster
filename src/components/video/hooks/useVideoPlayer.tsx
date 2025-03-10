@@ -115,19 +115,24 @@ export const useVideoPlayer = (videoUrl: string, format: string, thumbnailUrl: s
 
   const startClipping = () => {
     if (isClipping) {
+      const video = videoRef.current;
+      if (!video) return;
+      
       if (clipStart >= clipEnd) {
         toast.error("Invalid clip selection. Start time must be before end time.");
-        setIsClipping(false);
         return;
       }
       
       // Create the clip
       setClipCreated(true);
       setIsClipping(false);
-      toast.success(`Clip created from ${formatDuration(clipStart)} to ${formatDuration(clipEnd)}`);
+      toast.success(`Clip created: ${formatDuration(clipStart)} - ${formatDuration(clipEnd)}`);
     } else {
-      setClipStart(currentTime);
-      setClipEnd(Math.min(currentTime + 30, duration));
+      const video = videoRef.current;
+      if (!video) return;
+      
+      setClipStart(video.currentTime);
+      setClipEnd(Math.min(video.currentTime + 30, duration));
       setIsClipping(true);
       toast.info("Select clip end point on the timeline");
     }
@@ -182,7 +187,9 @@ export const useVideoPlayer = (videoUrl: string, format: string, thumbnailUrl: s
   };
 
   const handleClipEndChange = (newTime: number) => {
-    setClipEnd(newTime);
+    if (isClipping && newTime > clipStart) {
+      setClipEnd(newTime);
+    }
   };
 
   return {
