@@ -5,6 +5,7 @@ import { Video } from '@/types';
 import { formatDuration, formatRelativeTime } from '@/utils/mockData';
 import Button from '@/components/common/Button';
 import { toast } from 'sonner';
+import VideoPlayer from './VideoPlayer';
 
 interface VideoPreviewProps {
   video: Video;
@@ -21,17 +22,7 @@ const VideoPreview: React.FC<VideoPreviewProps> = ({ video }) => {
 
   return (
     <div className="lg:col-span-2 space-y-6">
-      <div className="aspect-video bg-black rounded-lg overflow-hidden relative">
-        <img 
-          src={video.thumbnailUrl} 
-          alt={video.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute bottom-3 right-3 bg-black/80 text-white text-xs px-2 py-1 rounded flex items-center">
-          <Clock size={14} className="mr-1.5" />
-          {formatDuration(video.duration)}
-        </div>
-      </div>
+      <VideoPlayer video={video} />
 
       <div className="flex flex-wrap items-center justify-between">
         <div className="space-y-1">

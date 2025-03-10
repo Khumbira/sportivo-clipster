@@ -1,6 +1,7 @@
-
 import React from 'react';
-import { mockCategories, mockTags } from '@/utils/mockData';
+import { cn } from '@/lib/utils';
+import { Category } from '@/types';
+import { mockCategories, mockVideos } from '@/utils/mockData';
 import { Badge } from '@/components/ui/badge';
 import { FolderOpen, Tag, Clock, CalendarDays } from 'lucide-react';
 
