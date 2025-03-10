@@ -3,6 +3,7 @@ import React from 'react';
 import { Video } from '@/types';
 import Timeline from './timeline/Timeline';
 import VideoControls from './controls/VideoControls';
+import ClipActions from './clip/ClipActions';
 import { useVideoPlayer } from './hooks/useVideoPlayer';
 
 interface VideoPlayerProps {
@@ -20,6 +21,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
     clipStart,
     clipEnd,
     isClipping,
+    clipCreated,
     zoomLevel,
     thumbnails,
     togglePlay,
@@ -29,7 +31,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
     handleSkipBack,
     handleSkipForward,
     startClipping,
+    cancelClipping,
     handleDownload,
+    addToLibrary,
+    discardClip,
+    previewClip,
     increaseZoom,
     decreaseZoom,
     handleClipEndChange
@@ -38,9 +44,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
   return (
     <div className="flex flex-col rounded-lg overflow-hidden bg-black relative">
       {isClipping && (
-        <div className="absolute top-0 left-0 right-0 z-10 bg-primary/80 text-white p-2 text-sm">
-          Creating clip: {formatDuration(clipStart)} to {formatDuration(clipEnd)}. 
-          Use the timeline to set the end point.
+        <div className="absolute top-0 left-0 right-0 z-10 bg-primary/80 text-white p-2 text-sm flex justify-between items-center">
+          <span>Creating clip: {formatDuration(clipStart)} to {formatDuration(clipEnd)}. 
+          Use the timeline to set the end point.</span>
+          <button 
+            onClick={cancelClipping}
+            className="text-white hover:text-white/80 ml-2 px-2 py-1 rounded-md bg-black/20 hover:bg-black/40 text-xs"
+          >
+            Cancel
+          </button>
         </div>
       )}
       
@@ -54,6 +66,17 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
       </video>
       
       <div className="bg-[#1A1D21] text-white p-4 space-y-4">
+        {clipCreated && (
+          <ClipActions 
+            clipStart={clipStart}
+            clipEnd={clipEnd}
+            onDownload={handleDownload}
+            onAddToLibrary={addToLibrary}
+            onPreview={previewClip}
+            onDiscard={discardClip}
+          />
+        )}
+        
         <Timeline 
           currentTime={currentTime}
           duration={duration}

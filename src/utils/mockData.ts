@@ -1,170 +1,190 @@
-import { Video, StatData, Category, Tag } from '../types';
+// utils/mockData.ts
+import { Video, StatData, Category, Tag } from '@/types';
 
-// Helper to format date to be X days ago
-const daysAgo = (days: number): Date => {
-  const date = new Date();
-  date.setDate(date.getDate() - days);
-  return date;
+export const formatDuration = (duration: number): string => {
+  const hours = Math.floor(duration / 3600);
+  const minutes = Math.floor((duration % 3600) / 60);
+  const seconds = Math.floor(duration % 60);
+
+  let formatted = '';
+  if (hours > 0) {
+    formatted += `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  } else {
+    formatted += `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  return formatted;
 };
 
-// Mock videos
+export const formatDate = (date: Date): string => {
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString(undefined, options);
+};
+
+export const formatBytes = (bytes: number, decimals: number = 2): string => {
+  if (bytes === 0) return '0 Bytes';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+};
+
 export const mockVideos: Video[] = [
   {
     id: '1',
-    title: 'Championship Winning Goal',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=500&auto=format&fit=crop',
-    duration: 24,
-    createdAt: daysAgo(0),
-    views: 1423,
-    tags: ['football', 'goal', 'highlights'],
-    size: 45_000_000, // 45MB
+    title: 'Introduction to React',
+    thumbnailUrl: '/thumbnails/react.png',
+    duration: 150,
+    createdAt: new Date(),
+    views: 12345,
+    tags: ['react', 'javascript', 'tutorial'],
+    size: 52428800,
     format: 'mp4',
-    resolution: '1080p',
-    category: 'football'
+    resolution: '720p',
+    category: 'Tutorials'
   },
   {
     id: '2',
-    title: 'Basketball Slam Dunk Compilation',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1518063319789-7217e6706b04?q=80&w=500&auto=format&fit=crop',
-    duration: 135,
-    createdAt: daysAgo(1),
-    views: 876,
-    tags: ['basketball', 'slam dunk', 'highlights'],
-    size: 120_000_000, // 120MB
+    title: 'Vue.js Crash Course',
+    thumbnailUrl: '/thumbnails/vue.png',
+    duration: 240,
+    createdAt: new Date(),
+    views: 67890,
+    tags: ['vue', 'javascript', 'crash course'],
+    size: 73400320,
     format: 'mp4',
     resolution: '1080p',
-    category: 'basketball'
+    category: 'Tutorials'
   },
   {
     id: '3',
-    title: 'Tennis Match Point',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=80&w=500&auto=format&fit=crop',
-    duration: 38,
-    createdAt: daysAgo(2),
-    views: 543,
-    tags: ['tennis', 'match point', 'highlights'],
-    size: 60_000_000, // 60MB
+    title: 'Angular for Beginners',
+    thumbnailUrl: '/thumbnails/angular.png',
+    duration: 180,
+    createdAt: new Date(),
+    views: 34567,
+    tags: ['angular', 'typescript', 'tutorial'],
+    size: 62914560,
     format: 'mp4',
-    resolution: '1080p',
-    category: 'tennis'
+    resolution: '720p',
+    category: 'Tutorials'
   },
   {
     id: '4',
-    title: 'Swimming Championship Finish',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?q=80&w=500&auto=format&fit=crop',
-    duration: 42,
-    createdAt: daysAgo(3),
-    views: 321,
-    tags: ['swimming', 'championship', 'highlights'],
-    size: 75_000_000, // 75MB
+    title: 'Node.js API Development',
+    thumbnailUrl: '/thumbnails/node.png',
+    duration: 210,
+    createdAt: new Date(),
+    views: 45678,
+    tags: ['node', 'javascript', 'api'],
+    size: 83886080,
     format: 'mp4',
     resolution: '1080p',
-    category: 'swimming'
+    category: 'Backend'
   },
   {
     id: '5',
-    title: 'Rugby Tackle Highlights',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1574166465803-a486a13ffd10?q=80&w=500&auto=format&fit=crop',
-    duration: 87,
-    createdAt: daysAgo(4),
-    views: 789,
-    tags: ['rugby', 'tackles', 'highlights'],
-    size: 95_000_000, // 95MB
+    title: 'Python Data Analysis',
+    thumbnailUrl: '/thumbnails/python.png',
+    duration: 300,
+    createdAt: new Date(),
+    views: 56789,
+    tags: ['python', 'data analysis', 'pandas'],
+    size: 94371840,
     format: 'mp4',
     resolution: '1080p',
-    category: 'rugby'
+    category: 'Data Science'
   },
   {
     id: '6',
-    title: 'Golf Perfect Swing',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?q=80&w=500&auto=format&fit=crop',
-    duration: 65,
-    createdAt: daysAgo(5),
-    views: 432,
-    tags: ['golf', 'swing', 'technique'],
-    size: 80_000_000, // 80MB
+    title: 'JavaScript ES6 Features',
+    thumbnailUrl: '/thumbnails/javascript.png',
+    duration: 120,
+    createdAt: new Date(),
+    views: 23456,
+    tags: ['javascript', 'es6'],
+    size: 41943040,
+    format: 'mp4',
+    resolution: '720p',
+    category: 'Web Development'
+  },
+  {
+    id: '7',
+    title: 'Docker Tutorial for Beginners',
+    thumbnailUrl: '/thumbnails/docker.png',
+    duration: 150,
+    createdAt: new Date(),
+    views: 78901,
+    tags: ['docker', 'devops'],
+    size: 52428800,
+    format: 'mp4',
+    resolution: '720p',
+    category: 'DevOps'
+  },
+  {
+    id: '8',
+    title: 'Kubernetes Explained',
+    thumbnailUrl: '/thumbnails/kubernetes.png',
+    duration: 240,
+    createdAt: new Date(),
+    views: 89012,
+    tags: ['kubernetes', 'devops'],
+    size: 73400320,
     format: 'mp4',
     resolution: '1080p',
-    category: 'golf'
+    category: 'DevOps'
+  },
+  {
+    id: '9',
+    title: 'Machine Learning Basics',
+    thumbnailUrl: '/thumbnails/machinelearning.png',
+    duration: 180,
+    createdAt: new Date(),
+    views: 90123,
+    tags: ['machine learning', 'python'],
+    size: 62914560,
+    format: 'mp4',
+    resolution: '720p',
+    category: 'Data Science'
+  },
+  {
+    id: '10',
+    title: 'Cybersecurity Fundamentals',
+    thumbnailUrl: '/thumbnails/cybersecurity.png',
+    duration: 210,
+    createdAt: new Date(),
+    views: 123456,
+    tags: ['cybersecurity', 'security'],
+    size: 83886080,
+    format: 'mp4',
+    resolution: '1080p',
+    category: 'Security'
   }
 ];
 
-// Stats for dashboard
-export const mockStats: StatData[] = [
-  {
-    label: 'Total Videos',
-    value: 342,
-    change: 12,
-    icon: 'Film'
-  },
-  {
-    label: 'Uploads This Month',
-    value: 78,
-    change: 24,
-    icon: 'Upload'
-  },
-  {
-    label: 'Downloads',
-    value: 1253,
-    change: -5,
-    icon: 'Download'
-  },
-  {
-    label: 'Total Tags',
-    value: 127,
-    change: 8,
-    icon: 'Tag'
-  }
+export const mockStatsData: StatData[] = [
+  { label: "Total Videos", value: 120, change: 5, icon: "upload" },
+  { label: "Total Views", value: "2.5M", change: 12, icon: "eye" },
+  { label: "Total Storage", value: "500 GB", change: 3, icon: "database" },
+  { label: "New Subscribers", value: 500, change: 8, icon: "user-plus" },
 ];
 
-// Categories
 export const mockCategories: Category[] = [
-  { id: '1', name: 'Football', count: 87 },
-  { id: '2', name: 'Basketball', count: 64 },
-  { id: '3', name: 'Tennis', count: 45 },
-  { id: '4', name: 'Swimming', count: 32 },
-  { id: '5', name: 'Rugby', count: 28 },
-  { id: '6', name: 'Golf', count: 21 }
+  { id: '1', name: 'Tutorials', count: 30 },
+  { id: '2', name: 'Product Demos', count: 20 },
+  { id: '3', name: 'Explainers', count: 15 },
+  { id: '4', name: 'Testimonials', count: 10 },
+  { id: '5', name: 'Presentations', count: 25 }
 ];
 
-// Tags
-export const mockTags: Tag[] = [
-  { id: '1', name: 'highlights', count: 124 },
-  { id: '2', name: 'goals', count: 86 },
-  { id: '3', name: 'interviews', count: 54 },
-  { id: '4', name: 'techniques', count: 43 },
-  { id: '5', name: 'events', count: 38 },
-  { id: '6', name: 'training', count: 34 }
+export const mockTags = [
+  { id: '1', name: 'Tutorial', count: 12 },
+  { id: '2', name: 'Product Demo', count: 8 },
+  { id: '3', name: 'Explainer', count: 5 },
+  { id: '4', name: 'Testimonial', count: 3 },
+  { id: '5', name: 'Presentation', count: 7 }
 ];
-
-// Helper function to format bytes
-export function formatBytes(bytes: number, decimals = 2): string {
-  if (bytes === 0) return '0 Bytes';
-  
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-  
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
-
-// Helper function to format duration
-export function formatDuration(seconds: number): string {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-}
-
-// Helper function to format relative time
-export function formatRelativeTime(date: Date): string {
-  const now = new Date();
-  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-  
-  if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
-  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
-  if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-  return `${Math.floor(diffInSeconds / 86400)} days ago`;
-}

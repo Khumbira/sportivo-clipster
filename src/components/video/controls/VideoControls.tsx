@@ -88,12 +88,13 @@ const VideoControls: React.FC<VideoControlsProps> = ({
         <button 
           onClick={startClipping}
           className={cn(
-            "p-1.5 rounded-full text-white", 
-            isClipping ? "bg-primary hover:bg-primary/90" : "bg-[#2A2E35] hover:bg-[#3A3E45]"
+            "p-1.5 rounded-full flex items-center gap-1.5 text-white", 
+            isClipping ? "bg-primary hover:bg-primary/90 px-2" : "bg-[#2A2E35] hover:bg-[#3A3E45]"
           )}
           title={isClipping ? "Finish clip" : "Create clip"}
         >
           <Scissors size={18} />
+          {isClipping && <span className="text-xs">Finish</span>}
         </button>
         
         <button 

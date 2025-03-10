@@ -76,6 +76,17 @@ const Timeline: React.FC<TimelineProps> = ({
     }
   };
 
+  // Calculate positions for clip markers
+  const getClipStartPosition = () => {
+    if (clipStart < startTime || clipStart > endTime) return null;
+    return `${((clipStart - startTime) / (endTime - startTime)) * 100}%`;
+  };
+
+  const getClipEndPosition = () => {
+    if (clipEnd < startTime || clipEnd > endTime) return null;
+    return `${((clipEnd - startTime) / (endTime - startTime)) * 100}%`;
+  };
+
   return (
     <>
       <div 
@@ -109,16 +120,56 @@ const Timeline: React.FC<TimelineProps> = ({
         </div>
         
         <div className="absolute top-6 left-0 right-0 h-16">
-          {isClipping && (
-            <div className="absolute h-full bg-black/50" style={{ left: '0%', width: `${((clipStart - startTime) / (endTime - startTime)) * 100}%`, display: clipStart < startTime ? 'none' : 'block' }} />
-          )}
-          
-          {isClipping && (
-            <div className="absolute h-full bg-primary/30 border-l-2 border-r-2 border-primary" style={{ left: `${Math.max(0, ((clipStart - startTime) / (endTime - startTime)) * 100)}%`, width: `${Math.min(100, ((Math.min(clipEnd, endTime) - Math.max(clipStart, startTime)) / (endTime - startTime)) * 100)}%` }} />
-          )}
-          
-          {isClipping && (
-            <div className="absolute h-full bg-black/50" style={{ left: `${((clipEnd - startTime) / (endTime - startTime)) * 100}%`, right: '0', display: clipEnd > endTime ? 'none' : 'block' }} />
+          {(isClipping || clipStart !== 0) && (
+            <>
+              <div 
+                className="absolute h-full bg-black/50" 
+                style={{ 
+                  left: '0%', 
+                  width: getClipStartPosition() || '0%',
+                  display: clipStart < startTime ? 'none' : 'block' 
+                }} 
+              />
+              
+              <div 
+                className="absolute h-full bg-primary/30 border-l-2 border-r-2 border-primary" 
+                style={{ 
+                  left: getClipStartPosition() || '0%',
+                  width: `${
+                    ((Math.min(clipEnd, endTime) - Math.max(clipStart, startTime)) / 
+                    (endTime - startTime)) * 100
+                  }%`,
+                  display: (clipStart > endTime || clipEnd < startTime) ? 'none' : 'block'
+                }} 
+              />
+              
+              <div 
+                className="absolute h-full bg-black/50" 
+                style={{ 
+                  left: getClipEndPosition() || '100%', 
+                  right: '0',
+                  display: clipEnd > endTime ? 'none' : 'block' 
+                }} 
+              />
+
+              {isClipping && getClipStartPosition() && (
+                <div 
+                  className="absolute top-0 h-full w-0.5 bg-primary z-10"
+                  style={{ left: getClipStartPosition() || '0%' }}
+                >
+                  <div className="w-3 h-3 rounded-full bg-primary -ml-[5px] -mt-[5px]"></div>
+                </div>
+              )}
+
+              {isClipping && getClipEndPosition() && (
+                <div 
+                  className="absolute top-0 h-full w-0.5 bg-primary z-10 cursor-ew-resize"
+                  style={{ left: getClipEndPosition() || '100%' }}
+                >
+                  <div className="w-4 h-4 rounded-full bg-primary border-2 border-white -ml-[7px] -mt-[7px]"></div>
+                </div>
+              )}
+            </>
           )}
         </div>
         
